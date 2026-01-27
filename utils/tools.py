@@ -428,11 +428,19 @@ def convert_to_m3u(path=None, first_channel_name=None, data=None):
                         if data:
                             item_list = data.get(original_channel_name, [])
                             for item in item_list:
-                                if item["url"] == channel_link:
+                                check_url = item["url"]
+                                if config.open_url_info and item.get("extra_info"):
+                                    check_url = add_url_info(check_url, item["extra_info"])
+                                if check_url == channel_link:
                                     item_data = item
                                     break
                         if item_data:
                             catchup = item_data.get("catchup")
+                            if not catchup and data:
+                                for item in data.get(original_channel_name, []):
+                                    if item.get("catchup"):
+                                        catchup = item.get("catchup")
+                                        break
                             if catchup:
                                 for key, value in catchup.items():
                                     m3u_output += f' {key}="{value}"'

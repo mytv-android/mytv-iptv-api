@@ -102,6 +102,7 @@ async def get_channels_by_subscribe_urls(
                         value = {
                             "url": url,
                             "headers": item.get("headers", None),
+                            "catchup": item.get("catchup", None),
                             "extra_info": info
                         }
                         if in_whitelist:
