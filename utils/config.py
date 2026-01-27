@@ -334,6 +334,10 @@ class ConfigManager:
         return cfg
 
     @property
+    def public_epg(self):
+        return self.config.get("Settings", "public_epg", fallback=None) or None
+    
+    @property
     def public_port(self):
         env = os.getenv("PUBLIC_PORT")
         if env:

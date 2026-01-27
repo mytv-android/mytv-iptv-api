@@ -381,6 +381,8 @@ def get_epg_url():
     """
     Get the epg result url
     """
+    if config.public_epg is not None:
+        return config.public_epg
     if os.getenv("GITHUB_ACTIONS"):
         repository = os.getenv("GITHUB_REPOSITORY", "Guovin/iptv-api")
         ref = os.getenv("GITHUB_REF", "gd")
