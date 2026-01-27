@@ -46,7 +46,7 @@ class Alias:
         primary_name = self.alias_to_primary.get(name, None) or self.get_primary_by_pattern(name)
         if primary_name is None:
             alias_format_name = format_name(name)
-            primary_name = self.alias_to_primary.get(alias_format_name, name)
+            primary_name = self.alias_to_primary.get(alias_format_name, alias_format_name)
         return primary_name
 
     def get_primary_by_pattern(self, name: str):
