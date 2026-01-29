@@ -56,6 +56,8 @@ async def get_channels_by_subscribe_urls(
         )
     logger = get_logger(constants.nomatch_log_path, level=INFO, init=True)
 
+    names_set = set(format_channel_name(n) for n in names) if names else set()
+
     def process_subscribe_channels(subscribe_info: str | dict) -> defaultdict:
         subscribe_url = subscribe_info
         channels = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
@@ -93,7 +95,7 @@ async def get_channels_by_subscribe_urls(
                     url = item.get("value", "").strip()
                     if data_name and url:
                         name = format_channel_name(data_name)
-                        if names and name not in names:
+                        if names_set and name not in names_set:
                             logger.info(f"{data_name},{url}")
                             continue
                         url_partition = url.partition("$")
