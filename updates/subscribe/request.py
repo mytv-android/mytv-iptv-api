@@ -10,7 +10,7 @@ import utils.constants as constants
 from utils.channel import format_channel_name
 from utils.config import config
 from utils.i18n import t
-from utils.requests.tools import get_soup_requests
+from utils.requests.tools import get_soup_requests, get_requests
 from utils.retry import retry_func
 from utils.tools import (
     merge_objects,
@@ -67,13 +67,13 @@ async def get_channels_by_subscribe_urls(
             try:
                 response = (
                     retry_func(
-                        lambda: get_soup_requests(
+                        lambda: get_requests(
                             subscribe_url, timeout=config.request_timeout
                         ),
                         name=subscribe_url,
                     )
                     if retry
-                    else get_soup_requests(subscribe_url, timeout=config.request_timeout)
+                    else get_requests(subscribe_url, timeout=config.request_timeout)
                 )
             except Exception as e:
                 print(f"{subscribe_url}: {e}")
